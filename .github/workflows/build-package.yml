@@ -17,7 +17,11 @@ jobs:
         shell: bash
         run: |
           # Send Hooks
-          pkgver=${{ github.event.client_payload.pkgver }}
+          if [ -n "$pkgver" ]; then
+            pkgver=${{ github.event.client_payload.pkgver }}
+          else
+            pkgver=$(date +%y.%m.%d-%H%M)
+          fi
           if [ -n "${{ github.event.client_payload.bigbranch }}" ];then
             branch=${{ github.event.client_payload.bigbranch }}
           else
